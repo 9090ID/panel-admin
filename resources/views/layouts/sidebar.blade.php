@@ -62,6 +62,14 @@
                 </span>
                 <h4 class="text-section">Components</h4>
               </li>
+
+              <li class="nav-item">
+                <a href="/company-profiles">
+                  <i class="fas fa-home"></i>
+                  <p>Profil Company</p>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a href="/users">
                   <i class="fas fa-users"></i>

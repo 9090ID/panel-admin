@@ -5,7 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\CKEditorController;
+
+use App\Http\Controllers\CompanyProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +35,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('user/show', [UserController::class, 'show'])->name('user.show');
     Route::resource('/categories', CategoryController::class);
     Route::resource('/posts', PostController::class);
-    Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.upload');
+    Route::resource('/company-profiles', CompanyProfileController::class);
+    // Route::get('/company-profiles', [CompanyProfileController::class, 'index']);
+    // Route::post('/company-profiles', [CompanyProfileController::class, 'store']);
+    // Route::delete('/company-profiles/{id}', [CompanyProfileController::class, 'destroy']);
     // Route::get('users/get', [UserController::class, 'getUsers'])->name('users.get');
     // Route::get('/profile', [ProfileController::class, 'edit']);
     // Route::get('/profile/update', [ProfileController::class, 'update']);
