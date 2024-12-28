@@ -60,30 +60,14 @@
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-ellipsis-h"></i>
                 </span>
-                <h4 class="text-section">Components</h4>
+                <h4 class="text-section">Data Publish</h4>
               </li>
 
-              <li class="nav-item">
-                <a href="/company-profiles">
-                  <i class="fas fa-home"></i>
-                  <p>Profil Company</p>
-                </a>
-              </li>
+              
 
-              <li class="nav-item">
-                <a href="/users">
-                  <i class="fas fa-users"></i>
-                  <p>Users</p>
-                
-                </a>
-              </li>
+             
 
-              <li class="nav-item">
-                <a href="/categories">
-                  <i class="fas fa-file"></i>
-                  <p>Kategori Berita</p>
-                </a>
-              </li>
+              
 
               <li class="nav-item">
                 <a href="/posts">
@@ -92,6 +76,65 @@
                 </a>
               </li>
 
+              
+
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Data Kampus</h4>
+              </li>
+              <li class="nav-item">
+                <a href="/company-profiles">
+                  <i class="fas fa-school"></i>
+                  <p>Profil Kampus</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/fakultas-inisma">
+                  <i class="fas fa-home"></i>
+                  <p>Data Fakultas</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/prodi-inisma">
+                  <i class="fas fa-graduation-cap"></i>
+                  <p>Data Program Studi</p>
+                </a>
+              </li>
+              
+
+              <li class="nav-item">
+                <a href="/kepeg-inisma">
+                  <i class="fas fa-users"></i>
+                  <p>Data Dosen/Pegawai</p>
+                </a>
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Data Referensi</h4>
+              </li>
+              <li class="nav-item">
+                <a href="/jabatan">
+                  <i class="far fa-address-card"></i>
+                  <p>Data Ref. Jabatan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/categories">
+                  <i class="fas fa-file"></i>
+                  <p>Data Kat Berita/Artikel</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/users">
+                  <i class="fas fa-users"></i>
+                  <p>Users</p>
+                </a>
+              </li>
 
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">

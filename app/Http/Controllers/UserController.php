@@ -93,11 +93,41 @@ class UserController extends Controller
                     $deleteUrl = route('users.destroy', $row->id);
 
                     return '<a href="' . $editUrl . '" class="btn btn-sm btn-primary"> <i class="fas fa-edit"></i> Edit</a>
-                            <button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i> Delete</button>';
+                            <button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i> Delete</button>
+                            <button class="btn btn-sm btn-warning change-password-btn" data-id="' . $row->id . '" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                Ubah Password
+            </button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
     }
+
+    public function changePassword(Request $request, $id)
+{
+    try {
+        // Validasi password
+        $request->validate([
+            'password' => 'required|min:8|confirmed', // Password minimal 8 karakter
+        ]);
+
+        // Ambil user berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Update password
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password berhasil diubah!',
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+        ], 500);
+    }
+}
 
 }

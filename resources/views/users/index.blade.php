@@ -68,6 +68,36 @@
             </div>
           </div>
         </div>
+
+        <!-- modal ubah password -->
+         <!-- Modal Ubah Password -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Ubah Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    @csrf
+                    <input type="hidden" id="user-id" name="user_id">
+                    <div class="form-group">
+                        <label for="new-password">Password Baru</label>
+                        <input type="password" class="form-control" id="new-password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Konfirmasi Password Baru</label>
+                        <input type="password" class="form-control" id="confirm-password" name="confirm_password" required>
+                    </div>
+                    <div class="form-group text-center mt-4">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -116,6 +146,46 @@
         });
     }
     });
+
+    $(document).on('click', '.change-password-btn', function() {
+    let userId = $(this).data('id');
+    $('#user-id').val(userId); // Set ID user ke dalam field tersembunyi
+});
+
+// Submit form ubah password
+$('#changePasswordForm').on('submit', function(e) {
+    e.preventDefault();
+
+    let userId = $('#user-id').val(); // Ambil ID user dari input tersembunyi
+    let newPassword = $('#new-password').val();
+    let confirmPassword = $('#confirm-password').val();
+
+    // Validasi agar password baru dan konfirmasi password cocok
+    if (newPassword !== confirmPassword) {
+        alert('Password tidak cocok!');
+        return;
+    }
+
+    $.ajax({
+        url: `/users/${userId}/change-password`, // Ganti dengan URL sesuai rute Anda
+        method: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            password: newPassword,
+        },
+        success: function(response) {
+            if (response.success) {
+                alert('Password berhasil diubah!');
+                $('#changePasswordModal').modal('hide'); // Tutup modal
+            } else {
+                alert('Terjadi kesalahan: ' + response.message);
+            }
+        },
+        error: function(xhr) {
+            alert('Terjadi kesalahan: ' + (xhr.responseJSON?.message || 'Unknown error'));
+        }
+    });
+});
     </script>
 
 
