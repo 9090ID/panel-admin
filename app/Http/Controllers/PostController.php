@@ -176,11 +176,11 @@ class PostController extends Controller
 
     // Perbarui relasi kategori
     $post->categories()->sync($request->categories);
-    // return response()->json([
-    //     'message' => 'Artikel berhasil diperbarui!',
-    //     'redirect_url' => route('posts.index')
-    // ]); // URL untuk redirect
-    return redirect()->route('posts.index')->with('success', 'Artikel berhasil diperbarui.');
+
+    return response()->json([
+        'message' => 'Data berhasil diperbarui!',
+        'redirect_url' => route('posts.index') // Mengarahkan ke halaman index
+    ]);
     }
 
     /**

@@ -32,8 +32,8 @@
     <script src="{{asset('admin/js/kaiadmin.min.js')}}"></script>
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="{{asset('admin/js/setting-demo.js')}}"></script>
-    <script src="{{asset('admin/js/demo.js')}}"></script>
+    <!-- <script src="{{asset('admin/js/setting-demo.js')}}"></script>
+    <script src="{{asset('admin/js/demo.js')}}"></script> -->
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>

@@ -75,6 +75,12 @@
                   <p>Post Artikel/Berita</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/pengumuman">
+                  <i class="fas fa-bullhorn"></i>
+                  <p>Post Pengumuman</p>
+                </a>
+              </li>
 
               
 
@@ -111,6 +117,18 @@
                   <p>Data Dosen/Pegawai</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/mahasiswa">
+                  <i class="fas fa-users"></i>
+                  <p>Data Mahasiswa</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/sambutan-pejabat">
+                  <i class="fas fa-user-graduate"></i>
+                  <p>Data Sambutan Pejabat</p>
+                </a>
+              </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-ellipsis-h"></i>
@@ -129,14 +147,16 @@
                   <p>Data Kat Berita/Artikel</p>
                 </a>
               </li>
+              
               <li class="nav-item">
                 <a href="/users">
                   <i class="fas fa-users"></i>
                   <p>Users</p>
                 </a>
               </li>
+              
 
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
                   <i class="fas fa-layer-group"></i>
                   <p>Base</p>
@@ -191,8 +211,8 @@
                     </li>
                   </ul>
                 </div>
-              </li>
-              <li class="nav-item">
+              </li> -->
+              <!-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarLayouts">
                   <i class="fas fa-th-list"></i>
                   <p>Sidebar Layouts</p>
@@ -334,8 +354,8 @@
                         </ul>
                       </div>
                     </li>
-                    <li>
-                      <a data-bs-toggle="collapse" href="#subnav2">
+                    <li> -->
+                      <!-- <a data-bs-toggle="collapse" href="#subnav2">
                         <span class="sub-item">Level 1</span>
                         <span class="caret"></span>
                       </a>
@@ -357,8 +377,32 @@
                   </ul>
                 </div>
               </li>
-            </ul>
+            </ul> -->
           </div>
         </div>
       </div>
       <!-- End Sidebar -->
+      <script>
+  // JavaScript untuk menambahkan class 'active' pada menu yang sedang aktif
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentPath = window.location.pathname; // Dapatkan path URL saat ini
+    const menuItems = document.querySelectorAll(".sidebar .nav-item a");
+
+    menuItems.forEach((menuItem) => {
+      // Jika href sama dengan path saat ini, tambahkan class 'active'
+      if (menuItem.getAttribute("href") === currentPath) {
+        menuItem.parentElement.classList.add("active");
+      }
+    });
+
+    // Tambahkan event listener untuk klik pada menu (opsional)
+    menuItems.forEach((menuItem) => {
+      menuItem.addEventListener("click", () => {
+        menuItems.forEach((item) =>
+          item.parentElement.classList.remove("active")
+        );
+        menuItem.parentElement.classList.add("active");
+      });
+    });
+  });
+</script>

@@ -51,7 +51,7 @@
                             <th>#</th>
                             <th>Judul</th>
                             <th>Penulis</th>
-                            <th style="width: 10%">View Berita</th>
+                            <th>Kategori Berita</th>
                             <th style="width: 10%">Image</th>
                             <th style="width: 10%">Aksi</th>
                           </tr>
@@ -91,31 +91,6 @@ $(function () {
     });
 });
 
-// $(document).on('click', '.delete-post', function () {
-//     var postId = $(this).data('id');
-//     var url = "{{ route('posts.destroy', ':id') }}".replace(':id', postId);
-
-//     if (confirm('Apakah Anda yakin ingin menghapus post ini?')) {
-//         $.ajax({
-//             url: url,
-//             type: 'DELETE',
-//             data: {
-//                 _token: '{{ csrf_token() }}'
-//             },
-//             success: function (response) {
-//                 if (response.success) {
-//                     alert(response.message);
-//                     $('#posts-table').DataTable().ajax.reload(); // Reload data di DataTables
-//                 } else {
-//                     alert('Gagal menghapus: ' + response.message);
-//                 }
-//             },
-//             error: function (xhr) {
-//                 alert('Terjadi kesalahan: ' + xhr.responseJSON.message);
-//             }
-//         });
-//     }
-// });
 $(document).on('click', '.delete-post', function () {
     var postId = $(this).data('id');
     var url = "{{ route('posts.destroy', ':id') }}".replace(':id', postId);

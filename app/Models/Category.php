@@ -13,4 +13,12 @@ class Category extends Model
     {
         return $this->belongsToMany(Post::class, 'category_post');
     }
+    // public function pengumuman()
+    // {
+    //     return $this->belongsToMany(Pengumuman::class, 'pengumuman_category');
+    // }
+    public function pengumumans()
+    {
+        return $this->belongsToMany(Pengumuman::class,'pengumuman_category');
+    }
 }

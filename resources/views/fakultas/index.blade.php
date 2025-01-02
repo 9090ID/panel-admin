@@ -24,9 +24,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('fakultas-inisma.create') }}" class="btn btn-primary btn-round ms-auto">
-                                <i class="fa fa-plus"></i> Tambah Fakultas
-                            </a>
+                        <button class="btn btn-primary mb-3 btn-round ms-auto" data-bs-toggle="modal" data-bs-target="#createFakultasModal">
+                                <i class="fas fa-plus"></i> Tambah Fakultas
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -41,7 +41,7 @@
                                         <th>Misi</th>
                                         <th>Akreditasi</th>
                                         <th>Dekan</th>
-                                        <th>Action</th>
+                                        <th style="width: 10px;">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -49,6 +49,66 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Create Fakultas -->
+<div class="modal fade" id="createFakultasModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="createFakultasForm" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Tambah Fakultas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="edit-id" name="id">
+                    <div class="form-group">
+                        <label for="edit-namafakultas">Nama Fakultas</label>
+                        <input type="text" class="form-control"  name="namafakultas" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-visi">Visi</label>
+                        <textarea class="form-control"  name="visi" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-misi">Misi</label>
+                        <textarea class="form-control content"  name="misi" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-deskripsi_singkat">Deskripsi Singkat</label>
+                        <textarea class="form-control content1"  name="deskripsi_singkat" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-fotofakultas">Foto Fakultas</label>
+                        <input type="file" class="form-control"  name="fotofakultas">
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-akreditasi">Akreditasi</label>
+                        <select class="form-control"  name="akreditasi" required>
+                            <option value="#">--pilih akreditasi--</option>
+                            <option value="Unggul">Unggul</option>
+                            <option value="Baik Sekali">Baik Sekali</option>
+                            <option value="Baik">Baik</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-dekan_id">Dekan</label>
+                        <select class="form-control" name="dekan_id" required>
+                            <option value="#">--pilih--</option>
+                            @foreach($pegawaiss as $pegawai)
+                            <option value="{{ $pegawai->id }}">{{ $pegawai->namadekan }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -76,11 +136,11 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-misi">Misi</label>
-                        <textarea class="form-control" id="edit-misi" name="misi" required></textarea>
+                        <textarea class="form-control content" id="edit-misi" name="misi" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="edit-deskripsi_singkat">Deskripsi Singkat</label>
-                        <textarea class="form-control" id="edit-deskripsi_singkat" name="deskripsi_singkat" required></textarea>
+                        <textarea class="form-control content1" id="edit-deskripsi_singkat" name="deskripsi_singkat" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="edit-fotofakultas">Foto Fakultas</label>
@@ -131,7 +191,7 @@
                 },
                 {
                     data: 'fotofakultas',
-                    name: 'fotofakultas'
+                    name: 'fotofakultas',
                 },
                 {
                     data: 'namafakultas',
@@ -142,9 +202,15 @@
                     name: 'visi'
                 },
                 {
-                    data: 'misi',
-                    name: 'misi'
-                },
+                data: 'misi',
+                name: 'misi',
+                render: function(data) {
+                    // Menghapus HTML dan hanya menampilkan teks
+                    var div = document.createElement("div");
+                    div.innerHTML = data;
+                    return div.textContent || div.innerText || "";
+                }
+            },
                 {
                     data: 'akreditasi',
                     name: 'akreditasi'
@@ -163,7 +229,7 @@
             ]
         });
         // Fungsi untuk menyimpan fakultas baru
-        $('#addFakultasForm').submit(function(e) {
+        $('#createFakultasForm').submit(function(e) {
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -176,7 +242,7 @@
                 contentType: false,
                 success: function(response) {
                     Swal.fire('Success', response.success, 'success');
-                    $('#addFakultasModal').modal('hide');
+                    $('#createFakultasModal').modal('hide');
                     location.reload(); // Reload halaman
                 },
                 error: function(xhr) {
@@ -184,6 +250,9 @@
                 }
             });
         });
+       
+    // Inisialisasi Summernote untuk misi dan deskripsi singkat
+   
         // Edit fakultas modal
         $(document).on('click', '.edit-fakultas', function() {
             let fakultasId = $(this).data('id');
@@ -193,8 +262,8 @@
                 $('#edit-id').val(data.id);
                 $('#edit-namafakultas').val(data.namafakultas);
                 $('#edit-visi').val(data.visi);
-                $('#edit-misi').val(data.misi);
-                $('#edit-deskripsi_singkat').val(data.deskripsi_singkat);
+                $('#edit-misi').summernote('code',data.misi);
+                $('#edit-deskripsi_singkat').summernote('code',data.deskripsi_singkat);
                 $('#edit-akreditasi').val(data.akreditasi);
                 $('#edit-dekan_id').val(data.dekan_id);
                 // Jika ada foto fakultas, tampilkan di modal
@@ -268,5 +337,42 @@
             });
         });
     });
+    $(document).ready(function() {
+        $('.content').summernote({
+            height: 300, // Tinggi editor
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            placeholder: 'Tulis konten Anda di sini...'
+        });
+    });
+
+    $(document).ready(function() {
+        $('.content1').summernote({
+            height: 300, // Tinggi editor
+            
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            placeholder: 'Tulis konten Anda di sini...'
+        });
+    });
+    
 </script>
 @endpush

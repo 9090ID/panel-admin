@@ -8,6 +8,14 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\SambutanPejabatController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\KhususController;
+
+use App\Models\Pengumuman;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +48,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('/company-profiles', CompanyProfileController::class);
     Route::resource('/fakultas-inisma', FakultasController::class);
     Route::resource('jabatan', JabatanController::class);
+    Route::get('jabatan/data', [UserController::class, 'show'])->name('jabatan.data');
+    Route::resource('kepeg-inisma', PegawaiController::class);
+    Route::resource('prodi-inisma', ProdiController::class);
+    Route::resource('sambutan-pejabat', SambutanPejabatController::class);
+    Route::resource('pengumuman', PengumumanController::class);
+    Route::resource('mahasiswa', MahasiswaController::class);
+    Route::post('mahasiswa/import', [MahasiswaController::class, 'import'])->name('mahasiswa.import');
+    Route::get('khusus/downloadformat', [KhususController::class, 'downloadFormat'])->name('khusus.downloadformat');
+    Route::delete('khusus/delete-all', [KhususController::class, 'destroy'])->name('khusus.delete-all');
+
+
+
+    
   
     // Route::get('/company-profiles', [CompanyProfileController::class, 'index']);
     // Route::post('/company-profiles', [CompanyProfileController::class, 'store']);

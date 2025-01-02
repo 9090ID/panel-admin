@@ -122,35 +122,35 @@ $(document).on('submit', '#edit-form', function (e) {
     let formData = new FormData(this);
 
     $.ajax({
-        url: $(this).attr('action'), // URL berasal dari form action
-        type: $(this).attr('method'), // Method berasal dari form method
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (response) {
-            // SweetAlert untuk pesan sukses
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: response.message, // Pesan dari server
-                timer: 3000,
-                timerProgressBar: true,
-                showConfirmButton: false
-            }).then(() => {
-                // Redirect atau reload halaman
-                window.location.href = response.redirect_url;
-            });
-        },
-        error: function (xhr) {
-            // SweetAlert untuk pesan error
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal!',
-                text: xhr.responseJSON?.message || 'Terjadi kesalahan. Silakan coba lagi.',
-                showConfirmButton: true
-            });
-        }
-    });
+    url: $(this).attr('action'), // URL berasal dari form action
+    type: $(this).attr('method'), // Method berasal dari form method
+    data: formData,
+    contentType: false,
+    processData: false,
+    success: function (response) {
+        // SweetAlert untuk pesan sukses
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: response.message, // Pesan dari server
+            timer: 1000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        }).then(() => {
+            // Redirect ke halaman posts.index
+            window.location.href = response.redirect_url;
+        });
+    },
+    error: function (xhr) {
+        // SweetAlert untuk pesan error
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: xhr.responseJSON?.message || 'Terjadi kesalahan. Silakan coba lagi.',
+            showConfirmButton: true
+        });
+    }
+});
 });
 
 

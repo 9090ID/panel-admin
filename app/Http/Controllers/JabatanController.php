@@ -47,6 +47,16 @@ class JabatanController extends Controller
         $jabatan = Jabatan::findOrFail($id);
         return response()->json($jabatan);
     }
+    public function show()
+    {
+        $jabatan = Jabatan::all();  // Ambil semua data jabatan
+
+        // Mengembalikan data jabatan dalam bentuk JSON
+        return response()->json([
+            'jabatan' => $jabatan
+        ]);
+    
+    }
     public function update(Request $request, $id)
     {
         // Validasi input

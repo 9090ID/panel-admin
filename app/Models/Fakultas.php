@@ -19,12 +19,5 @@ class Fakultas extends Model
     }
 
     // Menggenerate slug otomatis
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($fakultas) {
-            $fakultas->slug = Str::slug($fakultas->namafakultas, '-');
-        });
-    }
+   
 }

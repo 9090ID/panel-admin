@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Fakultas;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
@@ -10,13 +12,14 @@ use Spatie\Image\Enums\CropPosition;
 use Spatie\Image\Image as SpatieImage;
 use File;
 use Carbon\Carbon;
+
 class FakultasController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $fakultas = Fakultas::with('dekan')->get(); // Mengambil fakultas beserta data dekan
-    
+
             return DataTables::of($fakultas)
                 ->addIndexColumn()
                 ->addColumn('fotofakultas', function ($fakultas) {
@@ -40,11 +43,11 @@ class FakultasController extends Controller
                 ->rawColumns(['fotofakultas', 'action'])
                 ->make(true);
         }
-    
 
-        $fakultas = Fakultas::all(); 
+
+        $fakultas = Fakultas::all();
         $pegawaiss = Pegawai::all(); // Ambil semua pegawai (dekan)
-        return view('fakultas.index', compact('pegawaiss','fakultas')); // Mengirim data pegawai ke view
+        return view('fakultas.index', compact('pegawaiss', 'fakultas')); // Mengirim data pegawai ke view
     }
     public function create()
     {
@@ -65,6 +68,9 @@ class FakultasController extends Controller
 
         $data = $request->all();
 
+        // Generate slug with UUID
+        $data['slug'] = Str::slug($data['namafakultas'] . '-' . Str::uuid());
+
         // Proses upload foto fakultas jika ada
         if ($request->hasFile('fotofakultas')) {
             $fotoFakultas = $request->file('fotofakultas');
@@ -73,10 +79,16 @@ class FakultasController extends Controller
             $data['fotofakultas'] = $fotoFakultasPath;
         }
 
+       
         // Menyimpan data fakultas
-        Fakultas::create($data);
+        $fakultas = Fakultas::create($data);
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Fakultas berhasil disimpan!',
+            'data' => $fakultas,
+        ]);
 
-        return response()->json(['success' => 'Fakultas added successfully!']);
+        
     }
 
     public function edit($id)
@@ -99,15 +111,20 @@ class FakultasController extends Controller
 
         $fakultas = Fakultas::findOrFail($id);
         $data = $request->all();
-
+        $data['slug'] = Str::slug($data['namafakultas'] . '-' . Str::uuid());
         // Proses upload foto fakultas jika ada
         if ($request->hasFile('fotofakultas')) {
+            // Hapus foto lama jika ada
+            if ($fakultas->fotofakultas && file_exists(public_path($fakultas->fotofakultas))) {
+                unlink(public_path($fakultas->fotofakultas));
+            }
+        
+            // Upload foto baru
             $fotoFakultas = $request->file('fotofakultas');
             $fotoFakultasPath = 'fakultas/' . uniqid() . '.' . $fotoFakultas->getClientOriginalExtension();
             $fotoFakultas->move(public_path('fakultas'), $fotoFakultasPath);
             $data['fotofakultas'] = $fotoFakultasPath;
         }
-
         // Update data fakultas
         $fakultas->update($data);
 

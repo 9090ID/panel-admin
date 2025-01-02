@@ -11,4 +11,12 @@ class Jabatan extends Model
 
     protected $table = 'jabatan';
     protected $fillable = ['namajabatan', 'status'];
+    public function pegawai()
+    {
+        return $this->hasMany(Pegawai::class, 'jabatan_id');
+    }
+    public function jabatan()
+{
+    return $this->belongsTo(Jabatan::class, 'jabatan_id');
+}
 }

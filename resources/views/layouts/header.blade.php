@@ -5,7 +5,7 @@
             <div class="logo-header" data-background-color="dark">
                 <a href="index.html" class="logo">
                     <img
-                        src="assets/img/kaiadmin/logo_light.svg"
+                        src="{{asset('admin/img/kaiadmin/logo_light.svg')}}"
                         alt="navbar brand"
                         class="navbar-brand"
                         height="20" />
@@ -93,7 +93,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/jm_denis.jpg"
+                                                    src="{{asset('admin/img/jm_denis.jpg')}}"
                                                     alt="Img Profile" />
                                             </div>
                                             <div class="notif-content">
@@ -105,7 +105,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/chadengle.jpg"
+                                                    src="{{asset('admin/img/chadengle.jpg')}}"
                                                     alt="Img Profile" />
                                             </div>
                                             <div class="notif-content">
@@ -117,7 +117,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/mlane.jpg"
+                                                    src="{{asset('admin/img/mlane.jpg')}}"
                                                     alt="Img Profile" />
                                             </div>
                                             <div class="notif-content">
@@ -131,7 +131,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/talha.jpg"
+                                                    src="{{asset('admin/img/talha.jpg')}}"
                                                     alt="Img Profile" />
                                             </div>
                                             <div class="notif-content">
@@ -195,7 +195,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/profile2.jpg"
+                                                    src="{{asset('admin/img/profile2.jpg')}}"
                                                     alt="Img Profile" />
                                             </div>
                                             <div class="notif-content">
