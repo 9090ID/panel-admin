@@ -63,12 +63,6 @@
                 <h4 class="text-section">Data Publish</h4>
               </li>
 
-              
-
-             
-
-              
-
               <li class="nav-item">
                 <a href="/posts">
                   <i class="fas fa-book"></i>
@@ -79,6 +73,19 @@
                 <a href="/pengumuman">
                   <i class="fas fa-bullhorn"></i>
                   <p>Post Pengumuman</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/running_texts">
+                  <i class="fas fa-bullhorn"></i>
+                  <p>Post Running Teks</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/videos">
+                  <i class="fas fa-desktop"></i>
+                  <p>Post Video</p>
                 </a>
               </li>
 
@@ -124,6 +131,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/kalender-akademik">
+                  <i class="fas fa-file"></i>
+                  <p>Data Kalender Akademik</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/sambutan-pejabat">
                   <i class="fas fa-user-graduate"></i>
                   <p>Data Sambutan Pejabat</p>
@@ -134,6 +147,12 @@
                   <i class="fa fa-ellipsis-h"></i>
                 </span>
                 <h4 class="text-section">Data Referensi</h4>
+              </li>
+              <li class="nav-item">
+                <a href="/tahun-akademik">
+                  <i class="far fa-file"></i>
+                  <p>Data Ref. Tahun Akademik</p>
+                </a>
               </li>
               <li class="nav-item">
                 <a href="/jabatan">

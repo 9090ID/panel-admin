@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Spatie\Image\Image;
 use Spatie\Image\Enums\CropPosition;
 use Spatie\Image\Image as SpatieImage;
+
 use File;
 class PostController extends Controller
 {
@@ -79,6 +80,8 @@ class PostController extends Controller
         // Manipulasi gambar dan simpan sebagai format WEBP
         SpatieImage::load($image->getPathname())
             ->format('webp') // Ubah format ke WEBP
+            ->width(800)
+                ->height(600)
             ->save($fullPath); // Simpan gambar
 
         // Simpan path relatif untuk digunakan di database
@@ -130,7 +133,7 @@ class PostController extends Controller
         'content' => 'required|string',
         'categories' => 'required|array',
         'categories.*' => 'exists:categories,id',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Gambar opsional
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // Gambar opsional
     ]);
 
     // Jika ada gambar baru yang diunggah
@@ -151,6 +154,8 @@ class PostController extends Controller
         // Manipulasi gambar dan simpan sebagai format WEBP
         SpatieImage::load($image->getPathname())
             ->format('webp') // Ubah format ke WEBP
+            ->width(800)
+                ->height(600)
             ->save($fullPath); // Simpan gambar
 
         // Hapus gambar lama jika ada

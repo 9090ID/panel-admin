@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-mission">Misi</label>
-                        <textarea class="form-control" id="edit-mission" name="mission" required></textarea>
+                        <textarea class="form-control content1" id="edit-mission" name="mission" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="edit-history">Sejarah</label>
@@ -120,9 +120,9 @@
     $(function() {
         // Inisialisasi DataTable
         $('#company-profile-table').DataTable({
-            responsive: true,
-            scrollX: true,
-            autoWidth: true,
+            // responsive: true,
+            // scrollX: true,
+            // autoWidth: true,
             processing: true,
             serverSide: true,
             ajax: "{{ route('company-profiles.index') }}", // URL menuju controller

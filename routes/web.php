@@ -14,8 +14,13 @@ use App\Http\Controllers\SambutanPejabatController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\KhususController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\RunningTextController;
+use App\Http\Controllers\TahunAkademikController;
+use App\Http\Controllers\KalenderAkademikController;
 
 use App\Models\Pengumuman;
+use App\Models\TahunAkademik;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,9 +59,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('sambutan-pejabat', SambutanPejabatController::class);
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('mahasiswa', MahasiswaController::class);
+    Route::resource('videos', VideoController::class);
+    Route::resource('running_texts', RunningTextController::class);
+    Route::resource('tahun-akademik', TahunAkademikController::class);
+    Route::resource('kalender-akademik', KalenderAkademikController::class);
     Route::post('mahasiswa/import', [MahasiswaController::class, 'import'])->name('mahasiswa.import');
     Route::get('khusus/downloadformat', [KhususController::class, 'downloadFormat'])->name('khusus.downloadformat');
     Route::delete('khusus/delete-all', [KhususController::class, 'destroy'])->name('khusus.delete-all');
+    Route::get('/kalender-akademik/download/pdf', [KalenderAkademikController::class, 'downloadPDF'])->name('kalender-akademik.download.pdf');
+    Route::get('/kalender-akademik/download/excel', [KalenderAkademikController::class, 'downloadExcel'])->name('kalender-akademik.download.excel');
 
 
 
