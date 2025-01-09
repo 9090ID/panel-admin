@@ -8,14 +8,17 @@
 </head>
 <body>
 <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+
   <div class="relative py-3 sm:max-w-xl sm:mx-auto">
     <div
       class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
     </div>
+    
     <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
 
       <div class="max-w-md mx-auto">
-        <div>
+        <div class="justify-center">
+          <!-- <img src="{{asset('logo.webp')}}" height="80px" width="80px" alt="inisma"> -->
           <h1 class="text-2xl font-semibold">Login</h1>
         </div>
         <form action="{{ route('login') }}" method="POST" class="space-y-4">
@@ -38,13 +41,13 @@
         </form>
       </div>
 
-      <div class="w-full flex justify-center">
+      <!-- <div class="w-full flex justify-center">
         <button class="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
       Belum punya akun? 
       <a href="/register" class="text-blue-600 hover:underline">Daftar di sini</a>
     </p>
         </button>
-      </div>
+      </div> -->
 
     </div>
   </div>

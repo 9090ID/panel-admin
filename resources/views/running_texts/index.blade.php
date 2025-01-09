@@ -36,7 +36,7 @@
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Judul</th>
-                                        <th>Isi</th>
+                                        <!-- <th>Isi</th> -->
                                         <th>Slug</th>
                                         <th>Status</th>
                                         <th style="width: 10%">Action</th>
@@ -136,9 +136,21 @@
             ajax: "{{ route('running_texts.index') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                { data: 'judul', name: 'judul' },
-                { data: 'isi', name: 'isi' },
-                { data: 'slug', name: 'slug' },
+                {
+                data: 'judul',
+                name: 'judul',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
+            {
+                data: 'slug',
+                name: 'slug',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
+                // { data: 'slug', name: 'slug' },
                 { data: 'status', name: 'status' },
                 {
                     data: 'action',

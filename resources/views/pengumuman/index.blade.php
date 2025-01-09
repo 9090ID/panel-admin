@@ -63,14 +63,20 @@
    $(document).ready(function() {
     $('#pengumuman-table').DataTable({
             responsive: true,
-            scrollX: true,
-            autoWidth: true,
+            // scrollX: true,
+            // autoWidth: true,
             processing: true,
             serverSide: true,
         ajax: "{{ route('pengumuman.index') }}",  // Pastikan rute ini benar
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-            { data: 'judul', name: 'judul' },
+            {
+                data: 'judul',
+                name: 'judul',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
             { data: 'author', name: 'author' },
           
             { data: 'tanggalpublish', name: 'tanggalpublish' },

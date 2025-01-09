@@ -18,7 +18,11 @@
                     <a href="/kalender-akademik">Kalender Akademik</a>
                 </li>
             </ul>
+            
         </div>
+        <div class="alert alert-info">
+                <strong>Catatan:</strong> Tanggal menyesuaikan untuk input kalender akademik. Anda dapat menambahkan beberapa input form sekaligus.
+            </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -55,7 +59,7 @@
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Tahun Akademik</th>
-                                        <th>Nama Event</th>
+                                        <th>Agenda</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Selesai</th>
                                         <th>Deskripsi</th>
@@ -90,9 +94,9 @@
                                     <option value="{{ $tahun->id }}">{{ $tahun->nama_tahun }} - {{ $tahun->semester }}</option>
                                 @endforeach
                             </select>
-                            <input type="text" name="nama_event[]" class="form-control" placeholder="Nama Event" required>
+                            <input type="text" name="nama_event[]" class="form-control" placeholder="Agenda" required>
                             <input type="date" name="tanggal_mulai[]" class="form-control" required>
-                            <input type="date" name="tanggal _selesai[]" class="form-control" placeholder="Tanggal Selesai">
+                            <input type="date" name="tanggal_selesai[]" class="form-control" placeholder="Tanggal Selesai">
                             <input type="text" name="deskripsi[]" class="form-control" placeholder="Deskripsi">
                             <button class="btn btn-danger remove" type="button">Hapus</button>
                         </div>
@@ -129,7 +133,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="editNamaEvent" class="form-label">Nama Event</label>
+                        <label for="editNamaEvent" class="form-label">Agenda</label>
                         <input type="text" class="form-control" id="editNamaEvent" name="nama_event" required>
                     </div>
                     <div class="mb-3">
@@ -167,7 +171,13 @@
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'tahun_akademik', name: 'tahun_akademik' },
-                { data: 'nama_event', name: 'nama_event' },
+                {
+                data: 'nama_event',
+                name: 'nama_event',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
                 { data: 'tanggal_mulai', name: 'tanggal_mulai' },
                 { data: 'tanggal_selesai', name: 'tanggal_selesai' },
                 { data: 'deskripsi', name: 'deskripsi' },
@@ -181,28 +191,28 @@
         });
 
         // Add more input fields
-        $('#addMore').click(function() {
-            $('#dynamicInputFields').append(`
-                <div class="input -group mb-3">
-                    <select name="tahun_akademik_id[]" class="form-control" required>
-                        <option value="">Pilih Tahun Akademik</option>
-                        @foreach($tahunAkademik as $tahun)
-                            <option value="{{ $tahun->id }}">{{ $tahun->nama_tahun }} - {{ $tahun->semester }}</option>
-                        @endforeach
-                    </select>
-                    <input type="text" name="nama_event[]" class="form-control" placeholder="Nama Event" required>
-                    <input type="date" name="tanggal_mulai[]" class="form-control" required>
-                    <input type="date" name="tanggal_selesai[]" class="form-control" placeholder="Tanggal Selesai">
-                    <input type="text" name="deskripsi[]" class="form-control" placeholder="Deskripsi">
-                    <button class="btn btn-danger remove" type="button">Hapus</button>
-                </div>
-            `);
-        });
+$('#addMore').click(function() {
+    $('#dynamicInputFields').append(`
+        <div class="input-group mb-3">
+            <select name="tahun_akademik_id[]" class="form-control" required>
+                <option value="">Pilih Tahun Akademik</option>
+                @foreach($tahunAkademik as $tahun)
+                    <option value="{{ $tahun->id }}">{{ $tahun->nama_tahun }} - {{ $tahun->semester }}</option>
+                @endforeach
+            </select>
+            <input type="text" name="nama_event[]" class="form-control" placeholder="Agenda" required>
+            <input type="date" name="tanggal_mulai[]" class="form-control" required>
+            <input type="date" name="tanggal_selesai[]" class="form-control" placeholder="Tanggal Selesai">
+            <input type="text" name="deskripsi[]" class="form-control" placeholder="Deskripsi">
+            <button class="btn btn-danger remove" type="button">Hapus</button>
+        </div>
+    `);
+});
 
-        // Remove input fields
-        $(document).on('click', '.remove', function() {
-            $(this).closest('.input-group').remove();
-        });
+// Remove input fields
+$(document).on('click', '.remove', function() {
+    $(this).closest('.input-group').remove(); // Correctly remove the closest input group
+});
 
         // Delete functionality
         $(document).on('click', '.delete-btn', function() {
@@ -234,16 +244,44 @@
         });
 
         // Tambah functionality
-        $('#createKalenderAkademikForm').on('submit', function(e) {
-            e.preventDefault();
-            $.post("{{ route('kalender-akademik.store') }}", $(this).serialize(), function(response) {
-                $('#createKalenderAkademikModal').modal('hide');
-                table.ajax.reload();
-                Swal.fire('Sukses!', 'Data berhasil ditambahkan.', 'success');
-            }).fail(function() {
-                Swal.fire('Error!', 'Terjadi kesalahan saat menambahkan data.', 'error');
-            });
-        });
+       // Tambah functionality
+$('#createKalenderAkademikForm').on('submit', function(e) {
+    e.preventDefault();
+
+    // Get the values of the start and end dates
+    let tanggalMulai = $('input[name="tanggal_mulai[]"]').map(function() {
+        return $(this).val();
+    }).get();
+
+    let tanggalSelesai = $('input[name="tanggal_selesai[]"]').map(function() {
+        return $(this).val();
+    }).get();
+
+    // Validate that each start date is less than the corresponding end date
+    let isValid = true;
+    for (let i = 0; i < tanggalMulai.length; i++) {
+        if (tanggalMulai[i] && tanggalSelesai[i]) {
+            if (new Date(tanggalMulai[i]) >= new Date(tanggalSelesai[i])) {
+                isValid = false;
+                break;
+            }
+        }
+    }
+
+    if (!isValid) {
+        Swal.fire('Error!', 'Tanggal mulai harus lebih kecil dari tanggal selesai.', 'error');
+        return; // Stop the form submission
+    }
+
+    // Proceed with the AJAX request if validation passes
+    $.post("{{ route('kalender-akademik.store') }}", $(this).serialize(), function(response) {
+        $('#createKalenderAkademikModal').modal('hide');
+        table.ajax.reload();
+        Swal.fire('Sukses!', 'Data berhasil ditambahkan.', 'success');
+    }).fail(function() {
+        Swal.fire('Error!', 'Terjadi kesalahan saat menambahkan data.', 'error');
+    });
+});
 
         // Edit functionality
         $(document).on('click', '.edit-kalender', function() {

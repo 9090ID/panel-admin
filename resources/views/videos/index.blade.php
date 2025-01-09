@@ -123,9 +123,21 @@
             ajax: "{{ route('videos.index') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                { data: 'title', name: 'title' },
+                {
+                data: 'title',
+                name: 'title',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
                 { data: 'urlvideo', name: 'urlvideo' },
-                { data: 'slug', name: 'slug' },
+                {
+                data: 'slug',
+                name: 'slug',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
                 {
                     data: 'action',
                     name: 'action',

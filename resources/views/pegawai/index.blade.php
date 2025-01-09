@@ -199,9 +199,10 @@
                     searchable: false
                 },
                 {
-                    data: 'namadekan',
-                    name: 'namadekan'
-                },
+                data: 'namadekan',
+                name: 'namadekan',
+                
+            },
                 {
                     data: 'nip',
                     name: 'nip'
@@ -211,7 +212,9 @@
                     name: 'jabatan',
                     render: function(data, type, row) {
                         return data ? data : '-'; // Menampilkan data jabatan atau '-' jika tidak ada
+                        
                     }
+                    
                 },
                 {
                     data: 'lulusanterakhir',

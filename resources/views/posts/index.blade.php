@@ -71,25 +71,44 @@
 
 @push('scripts')
 <script>
-       
-$(function () {
+ $(function() {
     $('#posts-table').DataTable({
         responsive: true,
-        scrollX: true,
+        // scrollX: true,
         autoWidth: true,
         processing: true,
         serverSide: true,
         ajax: "{{ route('posts.index') }}", // URL menuju controller
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-            { data: 'title', name: 'title' },
-            { data: 'author', name: 'author' },
-            { data: 'categories', name: 'categories', orderable: false, searchable: false }, // Kolom kategori
+            {
+                data: 'title',
+                name: 'title',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
+            {
+                data: 'author',
+                name: 'author',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
+            {
+                data: 'categories',
+                name: 'categories',
+                orderable: false,
+                searchable: false,
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
             { data: 'image', name: 'image', orderable: false, searchable: false }, // Kolom untuk foto
             { data: 'action', name: 'action', orderable: false, searchable: false } // Kolom aksi
         ]
     });
-});
+});;
 
 $(document).on('click', '.delete-post', function () {
     var postId = $(this).data('id');

@@ -45,7 +45,7 @@
                                         <th>Nama</th>
                                         <th>Tahun Berdiri</th>
                                         <th>Visi</th>
-                                        <th>Misi</th>
+                                        <!-- <th>Misi</th> -->
                                         <th style="width: 15%">Action</th>
                                     </tr>
                                 </thead>
@@ -118,55 +118,36 @@
 @push('scripts')
 <script>
     $(function() {
-        // Inisialisasi DataTable
-        $('#company-profile-table').DataTable({
-            // responsive: true,
-            // scrollX: true,
-            // autoWidth: true,
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('company-profiles.index') }}", // URL menuju controller
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'logo',
-                    name: 'logo'
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'founded_year',
-                    name: 'founded_year',
-                    orderable: false,
-                    searchable: false
-                }, // Kolom kategori
-                {
-                    data: 'vision',
-                    name: 'vision',
-                    orderable: false,
-                    searchable: false
-                }, // Kolom kategori
-                {
-                    data: 'mission',
-                    name: 'mission',
-                    orderable: false,
-                    searchable: false
-                }, // Kolom kategori
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                } // Kolom aksi
-            ]
-        });
+    // Inisialisasi DataTable
+    $('#company-profile-table').DataTable({
+        responsive: true,
+        scrollX: true,
+        autoWidth: true,
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('company-profiles.index') }}", // URL menuju controller
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'logo', name: 'logo' },
+            {
+                data: 'name',
+                name: 'name',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
+            { data: 'founded_year', name: 'founded_year', orderable: false, searchable: false },
+            {
+                data: 'vision',
+                name: 'vision',
+                render: function(data) {
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+                }
+            },
+            { data: 'action', name: 'action', orderable: false, searchable: false }
+        ]
     });
+});
 
     // Hapus data company profile dengan SweetAlert
     $(document).on('click', '.delete-btn', function() {

@@ -37,8 +37,8 @@
                                         <th>No</th>
                                         <th>Foto Fakultas</th>
                                         <th>Nama Fakultas</th>
-                                        <th>Visi</th>
-                                        <th>Misi</th>
+                                        <!-- <th>Visi</th> -->
+                                        <!-- <th>Misi</th> -->
                                         <th>Akreditasi</th>
                                         <th>Dekan</th>
                                         <th style="width: 10px;">Action</th>
@@ -180,7 +180,7 @@
     $(function() {
         $('#fakultas-table').DataTable({
             responsive: true,
-            scrollX: true,
+            // scrollX: true,
             autoWidth: true,
             processing: true,
             serverSide: true,
@@ -197,20 +197,23 @@
                     data: 'namafakultas',
                     name: 'namafakultas'
                 },
-                {
-                    data: 'visi',
-                    name: 'visi'
-                },
-                {
-                data: 'misi',
-                name: 'misi',
-                render: function(data) {
-                    // Menghapus HTML dan hanya menampilkan teks
-                    var div = document.createElement("div");
-                    div.innerHTML = data;
-                    return div.textContent || div.innerText || "";
-                }
-            },
+            //     {
+            //     data: 'visi',
+            //     name: 'visi',
+            //     render: function(data) {
+            //         return '<div style="white-space: normal; word-wrap: break-word;">' + data + '</div>';
+            //     }
+            // },
+                // {
+                // data: 'misi',
+                // name: 'misi',
+                // render: function(data) {
+                //     // Menghapus HTML dan hanya menampilkan teks
+                //     var div = document.createElement("div");
+                //     div.innerHTML = data;
+                //     return div.textContent || div.innerText || "";
+                // }
+            // },
                 {
                     data: 'akreditasi',
                     name: 'akreditasi'
