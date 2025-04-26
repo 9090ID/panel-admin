@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('prodis', function (Blueprint $table) {
-            $table->string('jenjang', 10)->after('kodeprodi')->nullable(); // Tambahkan kolom jenjang
-  
+        Schema::table('buku', function (Blueprint $table) {
+            //
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('prodis', function (Blueprint $table) {
-            $table->dropColumn('jenjang'); // Hapus kolom jenjang saat rollback
+        Schema::table('buku', function (Blueprint $table) {
+            //
         });
     }
 };

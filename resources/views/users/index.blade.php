@@ -7,7 +7,7 @@
               <h3 class="fw-bold mb-3">Data Users</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
-                  <a href="/users">
+                  <a href="/pengguna">
                     <i class="icon-user"></i>
                   </a>
                 </li>
@@ -15,13 +15,13 @@
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="/users">Users</a>
+                  <a href="/pengguna">Users</a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="/users">DataUsers</a>
+                  <a href="/pengguna">DataUsers</a>
                 </li>
               </ul>
             </div>
@@ -32,7 +32,7 @@
                     <div class="d-flex align-items-center">
                
                       
-                       <a href="{{ route('users.create') }}"><button
+                       <a href="{{ route('pengguna.create') }}"><button
                         class="btn btn-primary btn-round ms-auto"
                         data-bs-toggle="modal"
                         data-bs-target="#addRowModal"
@@ -127,7 +127,7 @@
 
         $(document).on('click', '.delete-btn', function() {
     let userId = $(this).data('id'); // ID user dari tombol
-    let url = "{{ route('users.destroy', ':id') }}".replace(':id', userId);
+    let url = "{{ route('pengguna.destroy', ':id') }}".replace(':id', userId);
 
     if (confirm('Are you sure you want to delete this user?')) {
         $.ajax({
@@ -167,7 +167,7 @@ $('#changePasswordForm').on('submit', function(e) {
     }
 
     $.ajax({
-        url: `/users/${userId}/change-password`, // Ganti dengan URL sesuai rute Anda
+        url: `/pengguna/${userId}/change-password`, // Ganti dengan URL sesuai rute Anda
         method: 'POST',
         data: {
             _token: $('meta[name="csrf-token"]').attr('content'),

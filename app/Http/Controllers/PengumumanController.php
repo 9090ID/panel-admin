@@ -58,7 +58,7 @@ class PengumumanController extends Controller
             'judul' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'isipengumuman' => 'required',
-            'tanggalpublish' => 'required|date',
+            'tanggalpublish' => 'date',
             'categories' => 'required|array', // Harus array untuk kategori
             'categories.*' => 'exists:categories,id', // Validasi setiap kategori ada di tabel categories
             'file' => 'nullable|mimes:pdf|max:2048', // File harus PDF dengan ukuran maksimal 2MB
@@ -146,7 +146,7 @@ class PengumumanController extends Controller
         'judul' => 'required|string|max:255',
         'author' => 'required|string|max:255',
         'isipengumuman' => 'required',
-        'tanggalpublish' => 'required|date',
+        'tanggalpublish' => 'date',
         'categories' => 'required|array',
         'categories.*' => 'exists:categories,id', // Validasi kategori
         'file' => 'nullable|mimes:pdf|max:2048', // File harus PDF dengan ukuran maksimal 2MB

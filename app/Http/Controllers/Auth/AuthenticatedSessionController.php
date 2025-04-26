@@ -30,13 +30,30 @@ class AuthenticatedSessionController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($request->only('email', 'password', 'role'))) {
-            // \Log::info('User Logged In: ' . auth()->user()->email);
-            // \Log::info('User Role: ' . auth()->user()->role); // Tambahkan ini
-            return redirect()->intended('/admin/dashboard');
+        // if (Auth::attempt($request->only('email', 'password', 'role'))) {
+        //     // \Log::info('User Logged In: ' . auth()->user()->email);
+        //     // \Log::info('User Role: ' . auth()->user()->role); // Tambahkan ini
+        //     return redirect()->intended('/admin/dashboard');
+        // }
+    
+        // return back()->withErrors(['email' => 'Invalid credentials.']);
+        if (Auth::attempt($request->only('email', 'password'))) {
+            // Get the authenticated user
+            $user = Auth::user();
+    
+            // Redirect based on user role
+            if ($user->role === 'admin' || $user->role === 'master_admin') {
+                return redirect()->intended('/admin/dashboard');
+            } elseif ($user->role === 'user') {
+                return redirect()->intended('/halaman-user');
+            } else {
+                // Handle other roles or default case
+                return redirect()->intended('/home'); // or any default route
+            }
         }
     
         return back()->withErrors(['email' => 'Invalid credentials.']);
+    
     }
 
     /**
@@ -50,6 +67,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

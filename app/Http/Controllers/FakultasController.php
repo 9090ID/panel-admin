@@ -28,6 +28,7 @@ class FakultasController extends Controller
                         : asset('images/default.jpg'); // Gambar default jika tidak ada
                     return '<img src="' . $imageUrl . '" class="rounded" alt="Image" style="width: 50px; height: auto;">';
                 })
+                
                 ->addColumn('dekan', function ($fakultas) {
                     return $fakultas->dekan ? $fakultas->dekan->namadekan : 'Tidak ada dekan';
                 })

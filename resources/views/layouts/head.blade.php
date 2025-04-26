@@ -1,5 +1,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+@if (auth()->user()->role === 'admin')
     <title>Page Admin</title>
+    @elseif(auth()->user()->role === 'user')
+    <title>Page User</title>
+    @endif
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -36,6 +40,7 @@
     <link rel="stylesheet" href="{{asset('admin/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{asset('admin/css/plugins.min.css')}}" />
     <link rel="stylesheet" href="{{asset('admin/css/kaiadmin.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('admin/css/editMyprofil.css')}}" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{asset('admin/css/demo.css')}}" />

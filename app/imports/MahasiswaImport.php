@@ -4,10 +4,12 @@ namespace App\Imports;
 
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MahasiswaImport implements ToModel, WithHeadingRow
 {
@@ -38,7 +40,16 @@ class MahasiswaImport implements ToModel, WithHeadingRow
         if (!$prodi) {
             throw new \Exception('Prodi tidak ditemukan untuk: ' . $row['prodi']);
         }
-        
+        // Buat user baru dengan NIM sebagai username dan password default
+        $user = User::create([
+            'name' => $row['nama'],
+            'email' => $row['email'], // Anda bisa menggunakan email yang berbeda jika diperlukan
+            'username' => $row['nim'],
+            'password' => Hash::make($row['nim']), // Password default adalah NIM
+            'role' => 'user', // Atur role sesuai kebutuhan
+        ]);
+
+        // Siapkan data mahasiswa
         $dataMahasiswa = [
             'nama' => $row['nama'],
             'nim' => $row['nim'],
@@ -47,7 +58,10 @@ class MahasiswaImport implements ToModel, WithHeadingRow
             'no_hp' => $row['no_hp'],
             'alamat' => $row['alamat'],
             'email' => $row['email'],
+            'user_id' => $user->id, // Hubungkan dengan user
         ];
-        return new Mahasiswa($dataMahasiswa);
+
+        // Simpan data mahasiswa
+        Mahasiswa::create($dataMahasiswa);
     }
 }

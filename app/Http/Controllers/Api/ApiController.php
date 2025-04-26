@@ -15,6 +15,7 @@ use App\Models\Video;
 use App\Models\RunningText;
 use App\Models\KalenderAkademik;
 use App\Models\TahunAkademik;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -42,37 +43,37 @@ class ApiController extends Controller
     }
     public function kalenderIndex(Request $request)
     {
-       $query = KalenderAkademik::query();
+        $query = KalenderAkademik::query();
 
-// Filter berdasarkan tahun akademik
-if ($request->has('tahun_akademik_id') && $request->tahun_akademik_id != '') {
-    $query->where('tahun_akademik_id', $request->tahun_akademik_id);
-}
+        // Filter berdasarkan tahun akademik
+        if ($request->has('tahun_akademik_id') && $request->tahun_akademik_id != '') {
+            $query->where('tahun_akademik_id', $request->tahun_akademik_id);
+        }
 
-// Filter berdasarkan semester
-if ($request->has('semester') && $request->semester != '') {
-    $query->whereHas('tahunAkademik', function($q) use ($request) {
-        $q->where('semester', $request->semester);
-    });
-}
+        // Filter berdasarkan semester
+        if ($request->has('semester') && $request->semester != '') {
+            $query->whereHas('tahunAkademik', function ($q) use ($request) {
+                $q->where('semester', $request->semester);
+            });
+        }
 
-// Ambil data kalender akademik
-$kalenderAkademik = $query->with('tahunAkademik')->get();
+        // Ambil data kalender akademik
+        $kalenderAkademik = $query->with('tahunAkademik')->get();
 
-// Format response to include semester
-$responseData = $kalenderAkademik->map(function($item) {
-    return [
-        'id' => $item->id,
-        'nama_event' => $item->nama_event,
-        'tanggal_mulai' => $item->tanggal_mulai,
-        'tanggal_selesai' => $item->tanggal_selesai,
-        'semester' => $item->tahunAkademik->semester, // Include semester
-    ];
-});
+        // Format response to include semester
+        $responseData = $kalenderAkademik->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nama_event' => $item->nama_event,
+                'tanggal_mulai' => $item->tanggal_mulai,
+                'tanggal_selesai' => $item->tanggal_selesai,
+                'semester' => $item->tahunAkademik->semester, // Include semester
+            ];
+        });
 
-return response()->json($responseData);
+        return response()->json($responseData);
     }
-    
+
 
     // Menampilkan data prodi
     public function prodiIndex()
@@ -88,16 +89,16 @@ return response()->json($responseData);
     public function postsAllIndex()
     {
         $posts = Post::with('categories') // Menambahkan relasi kategori
-             ->latest()           // Mengurutkan berdasarkan created_at dari yang terbaru
-             ->get();
+            ->latest()           // Mengurutkan berdasarkan created_at dari yang terbaru
+            ->get();
         return response()->json($posts);
     }
     public function postsIndex()
     {
         $posts = Post::with('categories') // Menambahkan relasi kategori
-             ->latest()           // Mengurutkan berdasarkan created_at dari yang terbaru
-             ->take(6)            // Membatasi hanya 3 post yang ditampilkan
-             ->get();
+            ->latest()           // Mengurutkan berdasarkan created_at dari yang terbaru
+            ->take(6)            // Membatasi hanya 3 post yang ditampilkan
+            ->get();
         return response()->json($posts);
     }
 
@@ -114,49 +115,55 @@ return response()->json($responseData);
     }
     public function pengumumanIndex()
     {
-        
+
         $pengumuman = pengumuman::with('categories') // Menambahkan relasi kategori
-             ->latest()           // Mengurutkan berdasarkan created_at dari yang terbaru
-             ->take(4)            // Membatasi hanya 3 post yang ditampilkan
-             ->get();
+            ->latest()           // Mengurutkan berdasarkan created_at dari yang terbaru
+            ->take(4)            // Membatasi hanya 3 post yang ditampilkan
+            ->get();
         return response()->json($pengumuman);
     }
-    public function showBySlug($slug)
-        {
-    // Gunakan eager loading untuk relasi categories
-    $post = Post::with('categories')->where('slug', $slug)->first();
+    public function pengumumanallIndex()
+    {
 
-    if ($post) {
-        return response()->json($post);
-    } else {
-        return response()->json(['error' => 'Post not found'], 404);
+        $pengumumanall = pengumuman::with('categories') // Menambahkan relasi kategori
+            ->latest()           // Mengurutkan berdasarkan created_at dari yang terbaru
+            ->take(15)            // Membatasi hanya 3 post yang ditampilkan
+            ->get();
+        return response()->json($pengumumanall);
     }
+    public function showBySlug($slug)
+    {
+        // Gunakan eager loading untuk relasi categories
+        $post = Post::with('categories')->where('slug', $slug)->first();
 
+        if ($post) {
+            return response()->json($post);
+        } else {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
     }
 
     public function showBySlugpengumuman($slug)
-        {
-    // Gunakan eager loading untuk relasi categories
-    $post = pengumuman::with('categories')->where('slug', $slug)->first();
+    {
+        // Gunakan eager loading untuk relasi categories
+        $post = pengumuman::with('categories')->where('slug', $slug)->first();
 
-    if ($post) {
-        return response()->json($post);
-    } else {
-        return response()->json(['error' => 'Post not found'], 404);
-    }
-
+        if ($post) {
+            return response()->json($post);
+        } else {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
     }
     public function fakBySlug($slug)
-        {
-    // Gunakan eager loading untuk relasi categories
-    $fakultas = Fakultas::where('slug', $slug)->first();
+    {
+        // Gunakan eager loading untuk relasi categories
+        $fakultas = Fakultas::where('slug', $slug)->first();
 
-    if ($fakultas) {
-        return response()->json($fakultas);
-    } else {
-        return response()->json(['error' => 'Post not found'], 404);
-    }
-
+        if ($fakultas) {
+            return response()->json($fakultas);
+        } else {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
     }
 
     public function hitungMahasiswa()
@@ -184,18 +191,18 @@ return response()->json($responseData);
 
     public function sambutanIndex()
     {
-      $sambutan = SambutanPejabat::with(['pegawai', 'jabatan'])
-    ->whereHas('jabatan', function ($query) {
-        $query->where('namajabatan', 'rektor');
-    })
-    ->limit(1)
-    ->first();
+        $sambutan = SambutanPejabat::with(['pegawai', 'jabatan'])
+            ->whereHas('jabatan', function ($query) {
+                $query->where('namajabatan', 'rektor');
+            })
+            ->limit(1)
+            ->first();
         return response()->json($sambutan);
     }
 
     public function pimpinanIndex()
     {
-     $sambutan = SambutanPejabat::select('sambutan_pejabat.*') // Ambil semua kolom dari sambutan_pejabat
+        $sambutan = SambutanPejabat::select('sambutan_pejabat.*') // Ambil semua kolom dari sambutan_pejabat
             ->join('jabatan', 'sambutan_pejabat.jabatan_id', '=', 'jabatan.id') // Ganti 'jabatan_id' dan 'id' sesuai dengan kolom yang benar
             ->orderByRaw("CASE 
                 WHEN jabatan.namajabatan = 'Ketua Yayasan Inisma' THEN 1 
@@ -208,13 +215,11 @@ return response()->json($responseData);
             ->get(); // Mengambil semua data
 
         return response()->json($sambutan);
-
-  
     }
 
     public function logoIndex()
     {
-      // Cari data berdasarkan nama
+        // Cari data berdasarkan nama
         $company = CompanyProfile::where('name', 'Institut Islam Muaro Jambi')->first();
 
         // Jika data ditemukan, kembalikan logo
@@ -230,36 +235,85 @@ return response()->json($responseData);
             'success' => false,
             'message' => 'Company not found'
         ], 404);
-    
     }
 
     public function downloadPDF(Request $request)
     {
-         $tahunAkademikId = $request->query('tahun_akademik_id');
+        $tahunAkademikId = $request->query('tahun_akademik_id');
 
-    // Validasi input
-    if (!$tahunAkademikId) {
-        return response()->json(['error' => 'Tahun akademik diperlukan.'], 400);
+        // Validasi input
+        if (!$tahunAkademikId) {
+            return response()->json(['error' => 'Tahun akademik diperlukan.'], 400);
+        }
+
+        // Ambil data kalender akademik berdasarkan tahun
+        $kalenderData = KalenderAkademik::where('tahun_akademik_id', $tahunAkademikId)->get();
+
+        // Ambil nama tahun akademik dan semester
+        $tahunAkademik = TahunAkademik::find($tahunAkademikId);
+
+        // Generate PDF
+        $pdf = PDF::loadView('pdf.kalender', [
+            'kalenderData' => $kalenderData,
+            'tahunAkademik' => $tahunAkademik ? $tahunAkademik->nama_tahun : 'Tahun Akademik Tidak Ditemukan',
+            'semester' => $tahunAkademik ? $tahunAkademik->semester : 'Semester Tidak Ditemukan'
+        ]);
+
+        // Mengatur header untuk mengunduh file PDF
+        return $pdf->download('kalender_akademik.pdf');
     }
 
-    // Ambil data kalender akademik berdasarkan tahun
-    $kalenderData = KalenderAkademik::where('tahun_akademik_id', $tahunAkademikId)->get();
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'comment' => 'required|string',
+            'post_id' => 'required|exists:posts,id',
+        ]);
 
-    // Ambil nama tahun akademik dan semester
-    $tahunAkademik = TahunAkademik::find($tahunAkademikId);
+        $comment = Comment::create([
+            'name' => $validated['name'],
+            'comment' => $validated['comment'],
+            'post_id' => $validated['post_id'],
+        ]);
 
-    // Generate PDF
-    $pdf = PDF::loadView('pdf.kalender', [
-        'kalenderData' => $kalenderData,
-        'tahunAkademik' => $tahunAkademik ? $tahunAkademik->nama_tahun : 'Tahun Akademik Tidak Ditemukan',
-        'semester' => $tahunAkademik ? $tahunAkademik->semester : 'Semester Tidak Ditemukan'
-    ]);
-
-    // Mengatur header untuk mengunduh file PDF
-    return $pdf->download('kalender_akademik.pdf');
+        return response()->json($comment, 201); // Mengembalikan data komentar yang baru dibuat
     }
+    public function getComment($slug)
+    {
+        // Ambil post berdasarkan slug
+        $post = Post::where('slug', $slug)->first();
 
+        // Periksa apakah post ditemukan
+        if (!$post) {
+            return response()->json(['message' => 'Post not found'], 404);
+        }
 
+        // Ambil semua komentar terkait dengan post
+        $comments = $post->comments;
+
+        // Mengembalikan komentar dalam response JSON (API)
+        return response()->json($comments);
+    }
+    public function incrementViews($id)
+{
+    $post = Post::find($id);
+    if ($post) {
+        $post->views += 1;
+        $post->save();
+        return response()->json(['success' => true, 'views' => $post->views]);
+    }
+    return response()->json(['success' => false, 'message' => 'Post not found'], 404);
+}
+public function mostVisited()
+{
+    $posts = Post::with('categories') // Eager load categories
+                 ->orderBy('views', 'desc')
+                 ->take(10) // Optional: Limit to top 10 articles
+                 ->get();
+
+    return response()->json($posts);
+}
 
 
 }

@@ -7,7 +7,7 @@
             <h3 class="fw-bold mb-3">Data Mahasiswa</h3>
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
-                    <a href="/mahasiswa">
+                    <a href="/mhs">
                         <i class="icon-home"></i>
                     </a>
                 </li>
@@ -15,7 +15,7 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('mahasiswa.index') }}">Mahasiswa</a>
+                    <a href="/mhs">Mahasiswa</a>
                 </li>
             </ul>
         </div>
@@ -55,9 +55,9 @@
                                         <th>NIM</th>
                                         <th style="width: 30px;">Program Studi</th>
                                         <th>Angkatan</th>
-                                        <th>Email</th>
                                         <th>Nomor Hp</th>
-                                        <th>Alamat</th>
+                                        <th>Email</th>
+                                        {{-- <th>Aksi</th> --}}
                                     </tr>
                                 </thead>
                             </table>
@@ -104,7 +104,7 @@
             autoWidth: true, // Mengatur lebar otomatis pada kolom
             processing: true, // Menampilkan processing spinner saat memuat data
             serverSide: true, // Mengaktifkan server-side processing
-            ajax: "{{ route('mahasiswa.index') }}", // Endpoint Ajax
+            ajax: "{{ route('mhs.index') }}", // Endpoint Ajax
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -128,17 +128,19 @@
                     name: 'angkatan'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
                     data: 'no_hp',
                     name: 'no_hp'
                 },
                 {
-                    data: 'alamat',
-                    name: 'alamat'
+                    data: 'email',
+                    name: 'email'
                 },
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // },
             ]
         });
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 use App\Exports\MahasiswaExport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MahasiswaController extends Controller
 {
@@ -35,13 +36,14 @@ class MahasiswaController extends Controller
                 // })
                 ->addColumn('action', function ($row) {
                     return '
-                            <a href="' . route('pengumuman.edit', $row->id) . '" class="btn btn-info edit-btn"><i class="fas fa-edit"></i> Edit</a>
-                            <button class="btn btn-danger delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i> Delete</button>';
+                            <a href="' . route('mhs.show', $row->id) . '" class="btn btn-info edit-btn"><i class="fas fa-edit"></i> Detail</a></button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
+    //     $data = ['nama' => 'Mahasiswa', 'nim' => '12345'];
+    // Log::info('Data mahasiswa:', $data);
+    // return response()->json($data);
         return view('mahasiswa.index');
     }
 
@@ -155,18 +157,16 @@ class MahasiswaController extends Controller
     {
         $file = $request->file('file');
 
-    try {
-        DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
-        Excel::import(new MahasiswaImport, $file);
+            Excel::import(new MahasiswaImport, $file);
 
-        DB::commit();
-        return response()->json(['message' => 'Data berhasil diimpor'], 200);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return response()->json(['message' => 'Gagal mengimpor data: ' . $e->getMessage()], 400);
+            DB::commit();
+            return response()->json(['message' => 'Data berhasil diimpor'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Gagal mengimpor data: ' . $e->getMessage()], 400);
+        }
     }
-    }
-   
-    
 }

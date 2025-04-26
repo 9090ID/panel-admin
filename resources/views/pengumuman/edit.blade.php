@@ -23,10 +23,10 @@
                         <label for="isipengumuman">Isi Pengumuman</label>
                         <textarea id="isipengumuman" name="isipengumuman" class="form-control summernote" required>{{ $pengumuman->isipengumuman }}</textarea>
                     </div>
-                    <div class="form-group mt-3">
+                    <!-- <div class="form-group mt-3">
                         <label for="tanggalpublish">Tanggal Publish</label>
                         <input type="date" class="form-control" id="tanggalpublish" name="tanggalpublish" value="{{ old('tanggalpublish', \Carbon\Carbon::parse($pengumuman->tanggalpublish)->format('Y-m-d')) }}" required>
-                    </div>
+                    </div> -->
                     <div class="form-group mt-3">
                         <label for="categories">Kategori</label>
                         <select id="categories" name="categories[]" class="form-control select2" multiple="multiple" required>

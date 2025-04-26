@@ -40,6 +40,12 @@ Route::prefix('api')->group(function() {
     Route::get('download-pdf', [ApiController::class, 'downloadPdf']);
 
     Route::get('pengumuman/slug/{slug}', [ApiController::class, 'showBySlugpengumuman']);
+    Route::get('pengumumanall', [ApiController::class, 'pengumumanallIndex']);
+    Route::post('comments', [ApiController::class, 'store']);
+    Route::get('/posts/{slug}/comments', [ApiController::class, 'getComment']);
+    Route::post('/posts/{id}/increment-views', [ApiController::class, 'incrementViews']);
+    Route::get('/posts/most-visited', [ApiController::class, 'mostVisited']);
+
     Route::get('logo', [ApiController::class, 'logoIndex']);
     Route::get('posts',[ApiController::class, 'postsAllIndex']);
     Route::get('posts/slug/{slug}', [ApiController::class, 'showBySlug']);

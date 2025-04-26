@@ -89,8 +89,8 @@ class UserController extends Controller
             return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $editUrl = route('users.edit', $row->id);
-                    $deleteUrl = route('users.destroy', $row->id);
+                    $editUrl = route('pengguna.edit', $row->id);
+                    $deleteUrl = route('pengguna.destroy', $row->id);
 
                     return '<a href="' . $editUrl . '" class="btn btn-sm btn-primary"> <i class="fas fa-edit"></i> Edit</a>
                             <button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i> Delete</button>

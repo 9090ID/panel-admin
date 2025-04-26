@@ -23,6 +23,7 @@ class Mahasiswa extends Model
         'angkatan',
         'email',
         'foto',
+        'user_id',
     ];
 
     /**
@@ -31,6 +32,10 @@ class Mahasiswa extends Model
     public function prodi()
     {
         return $this->belongsTo(Prodi::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
     // public static function deleteall()
     // {
